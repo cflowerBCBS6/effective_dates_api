@@ -1,0 +1,119 @@
+Logic:
+	effective dates:
+		the date the product you purchase starts to cover you
+		The date you buy(successful submit to siebel/paying)
+		AEP -> Annual enrollment Period (u65 -> mean the same thing)
+		Interchangeable  different thing for U65 && O65
+		SEP - Special Enrollment Period ( All year long ) -> anytime you want to buy you need a reason to change (QLE) Qualifying|Qualified life event -> impact on effective date
+
+Reason for enrollment -> enrollment
+Products -> medicare/ non medicare /
+Generic Rule -> 60/70% of case fall in this rule ***u65 medical, dental, vision***
+	if <date> before 16th, effective date <= 1st of next month
+		if <date>  on or after 16, effective date <= 1st of month after next month
+
+		u65 is only 1st (meaning no start on the 15th
+		ex:    date  | eff date
+		<16   1/12/19| 2/1/2019
+		=16   3/16/19| 5/1/2019
+		>16   4/20/19| 6/1/2019
+String marketSegment,
+                                   String situation,
+                                   LocalDate eventDate,
+                                   LocalDate referenceDate,
+                                   List<LocalDate> listOfEffectiveDates,
+                                   HashMap<String, LocalDate> expirationDates
+
+60 day window on if you can use your QLE window -> if over 65 QLE is no longer valid
+***QLEs***
+QLE categories:
+LOSS of coverage Rule:
+Breaks the rule (lose job/ lose health insurance unrealated to the job)
+if event-date is on or before submit to siebel date, then <date> is submit to siebel date
+else <date> is event date
+(if event date is in the future date then use future if past then use siebel submit date)
+If <date> before end of month => effective date is 1st of next month
+
+ex:
+     event Dt| submit Dt | eff Dt
+    1/1/2019 |< 2/1/2019 |3/1/2019
+    2/1/2019 |= 2/1/2019 |3/1/2019
+    3/1/2019 |> 2/1/2019 |4/1/2019
+ex:
+
+Birth/Adoption rule:
+Given <date>,
+=> effective date choices are:
+	<date> 1st of month following <date>,
+	generic rule date
+ex
+	currentdate	date      eff date
+	0	03/13/2018| 03/13/2018,04/01/2018
+		03/19/2018| 03/19/2018, 04/01/2018, 05/01/2018
+
+ATM no Generic Rule for o65****
+
+***for change you need QLE for dental and vision***
+O65 	 ( We don't determine the effective dates for medicare advantage/PDP **MAYBE** **MAYBE DETERMINED IN AMATHYST)
+	Medicare Supplement
+	Given <date> is before 15th, then effective dates are: 14th of current month, 1st of next month, 1st (current month + 6) % 12
+Ex
+	date  |  eff date
+  1/1-1/14	1/15, 2/1,2/15, 3/1, 3/15, 4/1, 4/15, 5/1, 5/15, 6/1, 6/15, 7/1
+  1/15-1/31   | 2/1, 2/15
+Cut off date -> as in we no longer offer this product
+example
+	cut off date: 5/1
+	1/15, 2/1,2/15, 3/1, 3/15, 4/1, **4/15** this would be the 'last date we offer this product'
+
+
+
+
+
+
+
+
+
+
+
+List of scenarios to help define the business rules:
+Here is a list of scenarios I started for helping to define the business rules.
+
+1.	Policy Effective Date Offerings for On Exchange Medical Products
+	a.	Policy Effective Date Offerings for On Exchange Medical Products that are considered a New Medical Product Enrollment
+	b.	Policy Effective Date Offerings for On Exchange Medical Products that are considered a Change to an Existing Medical Product Enrollment
+2.	Policy Effective Date Offerings for Off Exchange Medical Products
+	a.	Policy Effective Date Offerings for Off Exchange Medical Products that are considered a New Medical Product Enrollment
+	b.	Policy Effective Date Offerings for Off Exchange Medical Products that are considered a Change to an Existing Medical Product Enrollment
+3.	Policy Effective Date Offerings for Transitional Medical Products
+	a.	Policy Effective Date Offerings for Transitional Medical Products that are considered a New Medical Product Enrollment
+	b.	Policy Effective Date Offerings for Transitional Medical Products that are considered a Change to an Existing Medical Product Enrollment
+4.	Policy Effective Date Offerings for Off Exchange Dental Products
+	a.	Policy Effective Date Offerings for Off Exchange Dental Products that are considered a New Dental Product Enrollment
+	b.	Policy Effective Date Offerings for Off Exchange Dental Products that are considered a Change to an Existing Dental Product Enrollment
+5.	Policy Effective Date Offerings for Off Exchange Vision Products
+	a.	Policy Effective Date Offerings for Off Exchange Vision Products that are considered a New Vision Product Enrollment
+	b.	Policy Effective Date Offerings for Off Exchange Vision Products that are considered a Change to an Existing Vision Product Enrollment
+6.	Policy Effective Date Offerings for Medicare Supplement Products
+	a.	Policy Effective Date Offerings for Medicare Supplement Products that are considered a New Medicare Supplement Product Enrollment
+	b.	Policy Effective Date Offerings for Medicare Supplement Products that are considered a Change to an Existing Medicare Supplement Product Enrollment
+7.	Policy Effective Date Offerings for Medicare Advantage Products
+	a.	Policy Effective Date Offerings for Medicare Advantage Products that are considered a New Medicare Advantage Product Enrollment
+	b.	Policy Effective Date Offerings for Medicare Advantage Products that are considered a Change to an Existing Medicare Advantage Product Enrollment
+8.	Policy Effective Date Offerings for Medicare Prescription Drug Plan (PDP) Products
+	a.	Policy Effective Date Offerings for Medicare Prescription Drug Plan (PDP) Products that are considered a New Medicare Prescription Drug Plan (PDP) Product Enrollment
+	b.	Policy Effective Date Offerings for Medicare Prescription Drug Plan (PDP) Products that are considered a Change to an Existing Medicare Prescription Drug Plan (PDP) Product Enrollment
+
+current |submit 	03/13
+04/1
+04/1		03/19
+05/01| 03/13| 03/13,04/01,06/01
+
+
+        this.marketSegment = marketSegment;
+        this.situation = situation;
+        this.eventDate = eventDate;
+        this.referenceDate = referenceDate;
+        this.effectiveDate = effectiveDate;
+        this.listOfEffectiveDates = listOfEffectiveDates;
+        this.expirationDates = expirationDates;
