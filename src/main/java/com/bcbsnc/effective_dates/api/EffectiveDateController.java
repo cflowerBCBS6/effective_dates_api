@@ -28,7 +28,6 @@ public class EffectiveDateController {
     }
 
     //YYYY-MM-DD
-    @CrossOrigin
     @GetMapping("/under65")
     public EffectiveDate effectiveDate(@RequestParam(value = "eventDate", required = false) String eventDate,
                                        @RequestParam(value = "situation", required = false) String situation,
@@ -64,7 +63,7 @@ public class EffectiveDateController {
     }
 
     @GetMapping("/help")
-    public URI getHelp() throws IOException, URISyntaxException {
+    public URI getHelp() throws URISyntaxException {
         return new URI("http://cflowerbcbs6.github.io/documenation-effectivedates-api/");
     }
 
@@ -72,12 +71,6 @@ public class EffectiveDateController {
     public void configurations(@RequestBody String configData) throws IOException, InterruptedException {
         configurationService.setConfig(configData);
     }
-
-//    @GetMapping("/testQuoteDate")
-//    public EffectiveDate testQuoteDate(){
-//        return null;
-//    }
-
-    //for testing they can pass in
+    
 
 }

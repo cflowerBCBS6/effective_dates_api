@@ -15,12 +15,12 @@ public class EffectiveDate {
     private String product;
     private List<EffectiveAndExpirationDate> effectiveDatesAndExpirationDate;
 
-    public EffectiveDate(@JsonProperty("Market Segment") String marketSegment,
+    public EffectiveDate(@JsonProperty("MarketSegment") String marketSegment,
                          @JsonProperty("Situation") String situation,
-                         @JsonProperty("Event date") LocalDate eventDate,
-                         @JsonProperty("Reference Date") LocalDate referenceDate,
+                         @JsonProperty("Eventdate") LocalDate eventDate,
+                         @JsonProperty("ReferenceDate") LocalDate referenceDate,
                          @JsonProperty("Product") String product,
-                         @JsonProperty("Effective and Expiration dates") List<EffectiveAndExpirationDate> effectiveDatesAndExpirationDate){
+                         @JsonProperty("EffectiveAndExpirationDates") List<EffectiveAndExpirationDate> effectiveDatesAndExpirationDate){
         this.marketSegment = marketSegment;
         this.situation = situation;
         this.eventDate = eventDate;
